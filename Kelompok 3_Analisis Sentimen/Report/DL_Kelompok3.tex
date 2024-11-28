@@ -1,0 +1,187 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{lipsum}
+
+% Page layout
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+
+% Title settings
+\title{\textbf{Deep Learning Course \\ Final Project Report \\ Dataset Analisis Sentimen}}
+\author{Andi Alisha Faiqihah (H071221010)\\ Dewa Ayu Eka Natalia Pratiwi (H071221021)\\ Laode Fahmi Hidayat (H071221022)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+% 1. Introduction
+\section{Introduction}
+
+Munculnya media sosial telah merevolusi cara kita berkomunikasi secara global, membawa banyak manfaat tetapi juga memunculkan fenomena negatif seperti komentar buruk dan pelecehan online. Komentar negatif di media sosial sering kali berupa label yang merugikan dan dapat memiliki dampak psikiatrik yang serius, jauh lebih besar daripada dampak dari bullying langsung. Kementerian Komunikasi dan Informasi Republik Indonesia telah mengingatkan warganet untuk menghindari komentar negatif demi menjaga reputasi digital mereka.
+
+Dampak dari komentar negatif ini tidak hanya dirasakan oleh individu, tetapi juga oleh masyarakat secara keseluruhan. Komentar tersebut dapat merendahkan martabat korban, menyebabkan stres, dan berkontribusi pada masalah kesehatan mental seperti depresi. Selain itu, anak-anak yang sering menerima komentar negatif cenderung mengembangkan perilaku tidak etis dan bahasa kasar, yang dapat merusak kemampuan mereka dalam berkomunikasi dengan baik.
+
+Untuk memahami kompleksitas dan luasnya fenomena komentar buruk di media sosial, serta untuk mengembangkan metode mitigasi yang efektif, diperlukan dataset analisis sentimen yang representatif. Dataset ini harus mencakup survei yang luas mengenai berbagai topik, platform media sosial, dan konteks yang berbeda. Dengan analisis ini, kita dapat mengidentifikasi pola, intensitas, dan frekuensi komentar negatif serta profil pengguna yang cenderung terlibat dalam perilaku tersebut.
+
+Selain itu, dataset sentimen ini dapat digunakan sebagai dasar untuk pengembangan sistem deteksi otomatis komentar negatif. Sistem ini akan membantu dalam mengidentifikasi dan menghapus komentar yang tidak pantas secara cepat dan efisien. Edukasi publik tentang pentingnya berperilaku positif di internet juga menjadi salah satu tujuan utama dari penelitian ini, dengan harapan dapat meningkatkan kesadaran masyarakat tentang risiko psikologis akibat komentar negatif.
+
+% 2. Related Works
+\section{Related Works}
+
+Berbagai penelitian telah menunjukkan efektivitas penggunaan deep learning dalam analisis sentimen, terutama pada data dari media sosial. Firdaus et al. (2022) menemukan bahwa model Bi-LSTM yang dikombinasikan dengan Word2Vec CBOW memiliki performa lebih baik dibandingkan metode lain dalam menganalisis sentimen dan emosi masyarakat Indonesia selama pandemi Covid-19. Penelitian ini menunjukkan bahwa Bi-LSTM unggul dalam akurasi karena mampu menangkap hubungan temporal jangka panjang pada data teks\cite{Kamarula2022}.
+
+Putra et al. (2021) memanfaatkan kombinasi Word2Vec CBOW dan LSTM untuk analisis sentimen ulasan hotel berbahasa Indonesia. Studi ini mencapai akurasi hingga 85.96\%, dengan konfigurasi optimal berupa evaluasi Hierarchical Softmax dan dimensi vektor sebesar 300 pada Word2Vec. Penelitian ini juga menggarisbawahi bahwa kombinasi Word2Vec CBOW dan LSTM efektif untuk menangani teks informal dalam bahasa Indonesia\cite{Muhammad2021}.
+
+Penelitian Ahmad et al. (2023) mengkaji perbedaan kinerja antara Word2Vec CBOW dan LSTM dalam menganalisis ulasan produk di platform e-commerce Amazon. Model LSTM terbukti unggul dalam menangkap hubungan semantik antar kata, menghasilkan akurasi yang lebih tinggi dibandingkan pendekatan berbasis machine learning tradisional\cite{Ahmad2023}.
+
+Proyek ini memanfaatkan kombinasi Word2Vec CBOW dan LSTM untuk analisis sentimen, dengan fokus pada menangkap konteks semantik serta pola temporal dalam teks. Pendekatan ini dirancang untuk mengatasi tantangan data teks informal dan kebisingan data yang umum ditemukan di platform media sosial. Dengan memanfaatkan teknik ini, diharapkan penelitian ini dapat memberikan kontribusi yang signifikan dalam pengembangan metodologi analisis sentimen.
+
+% 3. Dataset and Material
+\section{Dataset and Material}
+\subsection{Sumber Dataset}
+Dataset yang digunakan dalam proyek ini dikumpulkan dari berbagai platform media sosial dan aplikasi menggunakan teknik scraping. Scraping sendiri merupakan cara pengambilan suatu data atau informasi tertentu dengan jumlah besar untuk nantinya digunakan dalam berbagai keperluan seperti riset, analisis dan lainnya\cite{Telkom2024}. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{distribusiSumber.png}
+    \caption{Distibusi Sumber Dataset}
+    \label{fig:result}
+\end{figure}
+
+Tujuan pengumpulan data ini adalah untuk mendapatkan variasi komentar dan opini yang mencakup berbagai topik, emosi, serta konteks yang berbeda. Berikut merupakan sumber-sumber dari dataset ini:
+
+\begin{itemize}
+    \item YouTube
+    \item Instagram
+    \item Play Store
+    \item Tokopedia
+    \item X (sebelumnya Twitter)
+    \item Tiktok
+\end{itemize}
+
+\subsection{Pra-Processing}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{wordCloud.png}
+    \caption{Word Cloud Dataset}
+    \label{fig:result}
+\end{figure}
+
+Dataset yang dikumpulkan melalui scraping membutuhkan beberapa langkah pra-processing untuk memastikan data yang diperoleh siap untuk analisis dan pembuatan model. Berikut adalah langkah-langkah pra-pemrosesan yang dilakukan:
+
+\begin{enumerate}
+    \item \textbf{Pengumpulan Data:} Data dikumpulkan melalui teknik web scraping dari platform yang telah disebutkan, menggunakan alat seperti BeautifulSoup dan Selenium.
+    \item \textbf{Penghapusan Duplikasi:} Menghapus data yang duplikat untuk memastikan setiap entri unik.
+    \item \textbf{Pembersihan Teks:} Menghapus karakter khusus, tautan, dan tanda baca yang tidak diperlukan dari teks komentar.
+    \item \textbf{Normalisasi Teks:} Mengubah semua teks menjadi huruf kecil untuk konsistensi.
+    \item \textbf{Tokenisasi:} Memecah teks menjadi kata-kata atau token.
+    \item \textbf{Penghapusan Stopwords:} Menghilangkan kata-kata umum yang tidak memiliki makna signifikan dalam analisis (seperti "dan", "atau", "yang").
+    \item \textbf{Labeling:} Menandai setiap komentar dengan label positif atau negatif berdasarkan analisis sentimen awal.
+\end{enumerate}
+
+\subsection{Fitur dan Label}
+Dataset yang dihasilkan mencakup beberapa fitur penting yang digunakan untuk analisis dan pembuatan model:
+
+\begin{itemize}
+    \item \textbf{Komentar:} Teks ulasan atau komentar dari pengguna.
+    \item \textbf{Timestamp:} Waktu saat komentar dibuat.
+    \item \textbf{Sumber:} Platform dari mana komentar tersebut diambil (YouTube, Instagram, Play Store, Tokopedia, X, TikTok).
+    \item \textbf{Label:} Kategori sentimen dari komentar, yang bisa berupa positif atau negatif.
+\end{itemize}
+
+\subsection{Alat, Perpustakaan, dan Kerangka Kerja yang Digunakan}
+Untuk mengimplementasikan model dan analisis, berikut beberapa alat, perpustakaan, dan kerangka kerja yang digunakan:
+
+\begin{itemize}
+    \item \textbf{Python:} Bahasa pemrograman utama yang digunakan untuk pengumpulan data, pra-pemrosesan, dan pembuatan model.
+    \item \textbf{BeautifulSoup dan Selenium:} Alat scraping web yang digunakan untuk mengumpulkan data dari berbagai platform.
+    \item \textbf{Pandas:} Perpustakaan untuk manipulasi dan analisis data.
+    \item \textbf{NumPy:} Perpustakaan untuk operasi numerik yang efisien.
+    \item \textbf{NLTK (Natural Language Toolkit):} Digunakan untuk tugas pemrosesan bahasa alami seperti tokenisasi dan penghapusan stopwords.
+    \item \textbf{Scikit-learn:} Perpustakaan yang digunakan untuk pra-pemrosesan data dan pembuatan model machine learning.
+    \item \textbf{TensorFlow dan Keras:} Kerangka kerja deep learning yang digunakan untuk membangun dan melatih model neural network, termasuk model BERT dan MLP.
+    \item \textbf{Matplotlib dan Seaborn:} Perpustakaan visualisasi data yang digunakan untuk membuat grafik dan plot untuk analisis data eksploratif.
+\end{itemize}
+
+Dataset ini juga akan digunakan untuk melatih model analisis sentimen berbasis deep learning seperti Word2Vec-CBOW dan LSTM. Model-model ini dipilih karena kemampuannya dalam menangkap konteks dan nuansa emosional dalam teks dengan lebih baik dibandingkan metode tradisional. Dengan memanfaatkan dataset yang kaya dan beragam ini, diharapkan model yang dihasilkan dapat memberikan akurasi tinggi dalam mengklasifikasikan sentimen di media sosial, serta mampu menangani tantangan yang muncul dari penggunaan bahasa informal dan kebisingan dalam data.
+
+% 4. Result and Discussion
+\section{Result and Discussion}
+Hasil penelitian menunjukkan bahwa model berbasis Word2Vec dengan metode Continuous Bag of Words (CBOW) dan Long Short-Term Memory (LSTM) memberikan performa yang baik dalam klasifikasi sentimen, dengan keunggulan masing-masing sesuai kebutuhan analisis.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{word2vec.png}
+    \caption{Visualisasi Word2Vec-CBOW}
+    \label{fig:result}
+\end{figure}
+
+Pada model Word2Vec-CBOW, performa terbaik tercapai dengan test accuracy sebesar 76\%, serta metrik precision 80\%, recall 76\%, dan F1 score 76\%. Meskipun akurasi ini tergolong baik, proses pelatihan membutuhkan waktu lebih lama untuk mencapai stabilitas, terutama pada dataset dengan tingkat keragaman yang tinggi. Keunggulan utama dari Word2Vec-CBOW terletak pada kemampuannya menghasilkan representasi kata yang efisien, memungkinkan model menangkap pola-pola fitur penting dari teks. Namun, model ini cenderung sensitif terhadap noise, sehingga preprocessing data yang cermat diperlukan untuk memastikan embedding kata optimal.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{LSTM.png}
+    \caption{Visualisasi LSTM}
+    \label{fig:result}
+\end{figure}
+
+Sebaliknya, model LSTM menunjukkan performa yang lebih kompetitif dengan test accuracy sebesar 88,23\%, precision 92,39\%, recall 83,33\%, dan F1 score 87,62\%. Kemampuan utama LSTM adalah menangkap pola ketergantungan antar kata dalam data berurutan, sehingga menghasilkan performa yang lebih stabil. Distribusi metrik performanya yang lebih seimbang menunjukkan kemampuan generalisasi yang baik terhadap data yang belum pernah dilihat. Namun, waktu pelatihan yang lebih lama dibandingkan Word2Vec-CBOW menjadi salah satu kekurangannya.
+
+Referensi dari jurnal oleh Ahmad et al. (2023) mendukung hasil ini. Pada dataset ulasan produk Amazon, model Word2Vec-CBOW dalam penelitian tersebut mencapai akurasi 87\%, sementara model LSTM pada dataset serupa berhasil mencapai akurasi 93,66\%. Hal ini menunjukkan bahwa kedua model dapat memberikan performa optimal tergantung pada karakteristik dataset. Secara keseluruhan:
+
+\begin{itemize}
+    \item \textbf{Word2Vec-CBOW} lebih cocok untuk skenario dengan data bersih di mana efisiensi waktu pelatihan menjadi prioritas, meskipun akurasi relatif lebih terbatas.
+    \item \textbf{LSTM} lebih unggul dalam menangani data berurutan atau konteks semantik yang kompleks, memberikan hasil yang lebih stabil dengan generalisasi lebih baik, meskipun memerlukan waktu pelatihan lebih panjang.
+\end{itemize}
+
+Dengan demikian, pemilihan antara kedua model ini harus disesuaikan dengan kebutuhan spesifik proyek, seperti efisiensi waktu pelatihan, tingkat akurasi, atau kemampuan generalisasi. Penelitian ini mengonfirmasi bahwa baik Word2Vec-CBOW maupun LSTM adalah pilihan yang sangat kompetitif untuk tugas klasifikasi sentimen.
+
+% 5. Conclusion
+\section{Conclusion}
+Penelitian ini bertujuan untuk mengevaluasi performa model berbasis Word2Vec-CBOW dan LSTM dalam tugas klasifikasi sentimen, dengan fokus pada akurasi, stabilitas, dan kemampuan generalisasi. Tujuan ini berhasil dicapai dengan membandingkan kedua model menggunakan metrik kinerja utama, termasuk akurasi, precision, recall, dan F1 score. Hasil menunjukkan bahwa Word2Vec-CBOW memberikan akurasi 76\% dengan keunggulan dalam efisiensi waktu pelatihan, sementara LSTM mencapai akurasi yang lebih tinggi sebesar 88,23\%, didukung oleh stabilitas performa dan kemampuan menangkap pola ketergantungan antar kata dalam data berurutan.
+
+Beberapa wawasan kunci yang diperoleh dari penelitian ini adalah bahwa Word2Vec-CBOW lebih cocok untuk dataset yang bersih dan membutuhkan pelatihan cepat, sedangkan LSTM lebih unggul dalam menangani konteks semantik yang kompleks dengan generalisasi yang lebih baik pada data yang belum terlihat. Namun, sensitivitas Word2Vec-CBOW terhadap noise dan waktu pelatihan yang lebih lama pada LSTM menjadi pertimbangan dalam pemilihan model.
+
+Untuk penelitian di masa depan, disarankan untuk mengeksplorasi pengaruh metode preprocessing data terhadap performa Word2Vec-CBOW, serta menguji arsitektur LSTM yang lebih ringan untuk mengurangi waktu pelatihan. Selain itu, penelitian dapat diperluas ke dataset lain dengan karakteristik berbeda untuk mengonfirmasi generalisasi hasil ini. Kombinasi Word2Vec-CBOW dan LSTM dalam model hybrid juga dapat menjadi arah yang menjanjikan untuk mencapai hasil yang lebih optimal.
+
+\newpage
+\bibliographystyle{plain}
+\begin{thebibliography}{999}
+
+% Reference 1
+\bibitem{Hafidzah2024}
+Hafidzah, P., Maryani, S., Ihsani, B. Y., Nurmiwati, N., Erwin, E., & Niswariyana, A. K. Penerapan Deep Learning dalam Menganalisis Sentimen di Media Sosial. \textit{Seminar Nasional Paedagoria}, 2024. Available online: \url{https://journal.ummat.ac.id/index.php/fkip/article/view/25651} (accessed on November 27, 2024).
+
+% Reference 2
+\bibitem{Ahmad2023}
+Ahmad, S., Ridwan, A. M., & Setiawan, G. D. Analisis Sentimen Product Tools & Home Menggunakan Metode CNN dan LSTM. \textit{TEKNOKOM: Jurnal Teknologi dan Rekayasa Sistem Komputer}, 2023, 6(2), 133-140. Available online: \url{https://www.researchgate.net/publication/373078716_ANALISIS_SENTIMEN_PRODUCT_TOOLS_HOME_MENGGUNAKAN_METODE_CNN_DAN_LSTM} (accessed on November 27, 2024).
+
+% Reference 3
+\bibitem{Kamarula2022}
+Kamarula, M. R. F., & Rochmawati, N. Perbandingan CNN dan Bi-LSTM pada Analisis Sentimen dan Emosi Masyarakat Indonesia di Media Sosial Twitter Selama Pandemik Covid-19 yang Menggunakan Metode Word2Vec. \textit{JINACS: Journal of Informatics and Computer Science}, 2022, 4(2). Available online: \url{https://ejournal.unesa.ac.id/index.php/jinacs/article/view/50063/42702} (accessed on November 27, 2024).
+
+% Reference 4
+\bibitem{Telkom2024}
+Telkom University. Web Scraping: Pengertian dan Fungsinya dalam Pengambilan Data. Available online: \url{https://it.telkomuniversity.ac.id/web-scraping-pengertian-dan-fungsinya-dalam-pengambilan-data/} (accessed on November 27, 2024).
+
+% Reference 5
+\bibitem{Muhammad2021}
+Muhammad, P. F., Kusumaningrum, R., & Wibowo, A. Sentiment analysis using Word2VEC and Long Short-Term Memory (LSTM) for Indonesian hotel reviews. \textit{Procedia Computer Science}, 2021, 179, 728--735. Available online: \url{https://doi.org/10.1016/j.procs.2021.01.061} (accessed on November 27, 2024).
+
+
+\end{thebibliography}
+
+% Add your bibliography entries here
+% Example:
+% \begin{thebibliography}{9}
+% \bibitem{key1} Author Name, "Title of the Paper," Journal, Year.
+% \end{thebibliography}
+\end{document}
